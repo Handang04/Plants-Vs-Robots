@@ -21,6 +21,8 @@ public class Scene extends GraphicsApplication implements Interfaceable{
 	 * it is unordered
 	 */
 	protected static Set<GObject> activeContents = new HashSet<>();
+	protected Scene currentScene;
+	protected Scene previousScene;
 	
 	public void addElement(GObject element) {
 		this.activeContents.add(element);
@@ -31,6 +33,21 @@ public class Scene extends GraphicsApplication implements Interfaceable{
 			activeContents.remove(element);
 		}
 		return;
+	}
+	
+	public void switchSceneTo(Scene scene) {
+		if (this.currentScene == null) {
+			this.currentScene = scene;
+			this.currentScene.showContents();
+			System.out.println("Starting application!");
+			System.out.println("Current scene: " + scene);
+		} else {
+			System.out.println("Switch scene to " + scene);
+			this.previousScene = this.currentScene;
+			this.currentScene.hideContents();
+			this.currentScene = scene;
+			this.currentScene.showContents();
+		}
 	}
 
 	@Override

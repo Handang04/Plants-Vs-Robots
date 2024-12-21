@@ -25,7 +25,6 @@ public class GraphicsApplication extends GraphicsProgram{
 	@Override
 	public void run() {
 		add(label);
-		
 	}
 	
 	public static int getResolutionWidth() {
