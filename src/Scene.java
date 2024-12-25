@@ -1,5 +1,4 @@
 import acm.graphics.*;
-
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +20,19 @@ public class Scene extends GraphicsApplication implements Interfaceable{
 	 * it is unordered
 	 */
 	protected static Set<GObject> activeContents = new HashSet<>();
-	protected Scene currentScene;
-	protected Scene previousScene;
+	protected MainApplication mainApplication;
+	
+	public Scene (MainApplication mainApp) {
+		this.mainApplication = mainApp;
+	}
+	
+	public void setCurrentScene (Scene scene) {
+		this.currentScene = scene;
+	}
+	
+	public Scene getCurrentScene (Scene scene) {
+		return this.currentScene;
+	}
 	
 	public void addElement(GObject element) {
 		this.activeContents.add(element);
@@ -33,21 +43,6 @@ public class Scene extends GraphicsApplication implements Interfaceable{
 			activeContents.remove(element);
 		}
 		return;
-	}
-	
-	public void switchSceneTo(Scene scene) {
-		if (this.currentScene == null) {
-			this.currentScene = scene;
-			this.currentScene.showContents();
-			System.out.println("Starting application!");
-			System.out.println("Current scene: " + scene);
-		} else {
-			System.out.println("Switch scene to " + scene);
-			this.previousScene = this.currentScene;
-			this.currentScene.hideContents();
-			this.currentScene = scene;
-			this.currentScene.showContents();
-		}
 	}
 
 	@Override

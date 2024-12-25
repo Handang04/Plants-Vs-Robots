@@ -1,13 +1,30 @@
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 
-public class MainApplication extends Scene{
+public class MainApplication extends GraphicsApplication{
+	public Scene_MainMenu MainMenuScene;
+	
 	public void init() {
 		setSize(GraphicsApplication.getResolutionWidth(), GraphicsApplication.getResolutionHeight());
 		requestFocus();
+		
+		getGCanvas().addComponentListener(new ComponentAdapter() {
+	        @Override
+	        public void componentResized(ComponentEvent e) {
+	            enforceAspectRatio();
+	            if (currentScene instanceof Scene_MainMenu) {
+		        	((Scene_MainMenu) currentScene).scaleBackground();
+		        }
+	        }
+	    });
+		
+		this.MainMenuScene = new Scene_MainMenu(this);
 	}
 	
 	public void run() {
 		addMouseListeners();
+		switchSceneTo(MainMenuScene);
 	}
 	
 	@Override
@@ -39,8 +56,6 @@ public class MainApplication extends Scene{
 	}
 	
 	public static void main(String[] args) {
-		MainApplication mainApp = new MainApplication();
-		mainApp.start();
-		mainApp.requestFocus();
+		new MainApplication().start();
 	}
 }
